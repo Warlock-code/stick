@@ -1,4 +1,5 @@
 import { Brain, Sparkles, Flame, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 export default function HomePage() {
   return (
@@ -6,9 +7,12 @@ export default function HomePage() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between">
         <div className="text-2xl font-black tracking-tight">Stick</div>
 
-        <button className="rounded-full bg-black px-5 py-2 text-sm font-bold text-white shadow-lg">
-          Get Started
-        </button>
+        <Link
+  href="/sign-up"
+  className="rounded-full bg-black px-5 py-2 text-sm font-bold text-white shadow-lg"
+>
+  Get Started
+</Link>
       </nav>
 
       <section className="mx-auto grid max-w-6xl gap-10 py-20 md:grid-cols-2 md:items-center">
@@ -30,13 +34,19 @@ export default function HomePage() {
           </p>
 
           <div className="mt-8 flex gap-3">
-            <button className="flex items-center gap-2 rounded-2xl bg-violet-600 px-6 py-4 font-black text-white shadow-xl shadow-violet-300">
-              Start learning <ArrowRight size={18} />
-            </button>
+            <Link
+  href="/sign-up"
+  className="flex items-center gap-2 rounded-2xl bg-violet-600 px-6 py-4 font-black text-white shadow-xl shadow-violet-300"
+>
+  Start learning <ArrowRight size={18} />
+</Link>
 
-            <button className="rounded-2xl bg-white px-6 py-4 font-black shadow-md">
-              See demo
-            </button>
+            <Link
+  href="/login"
+  className="rounded-2xl bg-white px-6 py-4 font-black text-black shadow-md"
+>
+  Log in
+</Link>
           </div>
         </div>
 
