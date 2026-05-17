@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { NextResponse } from "next/server"
 
-const PRO_PRICE_USD_CENTS = 499
+const PRO_PRICE_GHS_PESEWAS = 8000
 
 export async function POST() {
   const supabase = await createClient()
@@ -22,8 +22,8 @@ export async function POST() {
     },
     body: JSON.stringify({
       email: user.email,
-      amount: PRO_PRICE_USD_CENTS,
-      currency: "USD",
+      amount: PRO_PRICE_GHS_PESEWAS,
+currency: "GHS",
       callback_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment/callback`,
       metadata: {
         user_id: user.id,
