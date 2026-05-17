@@ -74,6 +74,9 @@ export default function LoginPage() {
           <Link href="/sign-up" className="text-violet-600">
             Sign up
           </Link>
+          <Link href="/forgot-password" className="block text-right text-sm font-bold text-violet-600">
+  Forgot password?
+</Link>
         </p>
       </div>
     </main>
