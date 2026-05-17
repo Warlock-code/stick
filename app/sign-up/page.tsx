@@ -41,7 +41,7 @@ export default function SignUpPage() {
       })
     }
 
-    router.push("/dashboard")
+    router.push("/check-email")
   }
 
   return (
