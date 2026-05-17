@@ -11,6 +11,7 @@ export default function ThemeForm({ initialTheme }: { initialTheme: string }) {
 
   async function updateTheme(value: string) {
     setTheme(value)
+    document.documentElement.classList.toggle("dark", value === "dark")
 
     const {
       data: { user },

@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/browser"
 import { Brain, Clock, Home, Layers, LogOut, Sparkles, User } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -16,6 +16,7 @@ const navItems = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter()
+  const pathname = usePathname()
   const supabase = createClient()
   const [theme, setTheme] = useState("light")
 
@@ -34,13 +35,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         .single()
 
       const userTheme = data?.theme ?? "light"
-      setTheme(userTheme)
 
+      setTheme(userTheme)
       document.documentElement.classList.toggle("dark", userTheme === "dark")
     }
 
     loadTheme()
-  }, [supabase])
+  }, [supabase, pathname])
 
   async function handleLogout() {
     await supabase.auth.signOut()
@@ -54,7 +55,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         theme === "dark" ? "bg-[#0f0b18] text-white" : "bg-[#f8f7ff] text-black"
       }`}
     >
-      <header className="sticky top-0 z-50 border-b border-black/5 bg-white/80 px-5 py-4 backdrop-blur-xl">
+      <header
+        className={`sticky top-0 z-50 border-b px-5 py-4 backdrop-blur-xl ${
+          theme === "dark"
+            ? "border-white/10 bg-[#171322]/80"
+            : "border-black/5 bg-white/80"
+        }`}
+      >
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="rounded-2xl bg-black p-2 text-white">
