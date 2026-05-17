@@ -7,6 +7,7 @@ const config: CapacitorConfig = {
   server: {
     url: "https://stick-beta.vercel.app",
     cleartext: true,
+    androidScheme: "https",
   },
 }
 
