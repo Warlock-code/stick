@@ -1,8 +1,8 @@
-import { startProCheckout } from "@/app/actions/payment-actions"
 import { AppShell } from "@/components/layout/app-shell"
 import { createClient } from "@/lib/supabase/server"
 import { Check, Sparkles } from "lucide-react"
 import { redirect } from "next/navigation"
+import CheckoutButton from "./checkout-button"
 
 type PricingPageProps = {
   searchParams: Promise<{ checkout?: string }>
@@ -57,6 +57,18 @@ export default async function PricingPage({
           </h1>
         </div>
 
+        {checkout === "success" && (
+          <div className="rounded-2xl bg-green-50 p-4 font-bold text-green-700">
+            Payment successful. Your Pro plan is now active.
+          </div>
+        )}
+
+        {checkout === "failed" && (
+          <div className="rounded-2xl bg-red-50 p-4 font-bold text-red-700">
+            Payment failed or could not be verified. Try again.
+          </div>
+        )}
+
         {checkout === "coming-soon" && (
           <div className="rounded-2xl bg-yellow-50 p-4 font-bold text-yellow-700">
             Payments are not connected yet. Pro checkout will be added before
@@ -100,14 +112,7 @@ export default async function PricingPage({
                 </div>
 
                 {plan.name === "Pro" ? (
-                  <form action={startProCheckout}>
-                    <button
-                      disabled={isCurrent}
-                      className="mt-6 w-full rounded-2xl bg-white py-4 font-black text-black disabled:opacity-60"
-                    >
-                      {isCurrent ? "Current plan" : "Upgrade to Pro"}
-                    </button>
-                  </form>
+                  <CheckoutButton disabled={isCurrent} />
                 ) : (
                   <button
                     disabled

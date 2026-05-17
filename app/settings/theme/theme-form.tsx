@@ -8,8 +8,10 @@ export default function ThemeForm({ initialTheme }: { initialTheme: string }) {
   const router = useRouter()
   const supabase = createClient()
   const [theme, setTheme] = useState(initialTheme)
+  const [saving, setSaving] = useState(false)
 
   async function updateTheme(value: string) {
+    setSaving(true)
     setTheme(value)
     document.documentElement.classList.toggle("dark", value === "dark")
 
@@ -17,12 +19,25 @@ export default function ThemeForm({ initialTheme }: { initialTheme: string }) {
       data: { user },
     } = await supabase.auth.getUser()
 
-    if (!user) return router.push("/login")
+    if (!user) {
+      router.push("/login")
+      return
+    }
 
-    await supabase.from("profiles").update({ theme: value }).eq("id", user.id)
+    const { error } = await supabase
+      .from("profiles")
+      .update({ theme: value })
+      .eq("id", user.id)
 
-    document.documentElement.classList.toggle("dark", value === "dark")
-router.refresh()
+    if (error) {
+      setSaving(false)
+      return
+    }
+
+    localStorage.setItem("stick-theme", value)
+
+    router.refresh()
+    setSaving(false)
   }
 
   return (
@@ -35,8 +50,9 @@ router.refresh()
       {["light", "dark"].map((option) => (
         <button
           key={option}
+          disabled={saving}
           onClick={() => updateTheme(option)}
-          className={`w-full rounded-3xl p-5 text-left font-black shadow-sm ${
+          className={`w-full rounded-3xl p-5 text-left font-black shadow-sm disabled:opacity-60 ${
             theme === option
               ? "bg-violet-600 text-white"
               : "bg-white text-black"

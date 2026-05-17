@@ -38,7 +38,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         .eq("id", user.id)
         .single()
 
-      const userTheme = data?.theme ?? "light"
+        const savedTheme = localStorage.getItem("stick-theme")
+const userTheme = savedTheme || data?.theme || "light"
 
       document.documentElement.classList.toggle("dark", userTheme === "dark")
       setThemeLoaded(true)
