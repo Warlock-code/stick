@@ -38,3 +38,96 @@ body {
 .dark .shadow-2xl {
   box-shadow: none;
 }
+:root {
+  --app-bg: #f8f7ff;
+  --card-bg: #ffffff;
+  --text-main: #15111f;
+  --text-muted: #6b7280;
+}
+
+.dark {
+  --app-bg: #0f0b18;
+  --card-bg: #171322;
+  --text-main: #ffffff;
+  --text-muted: #b8adc9;
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--text-main);
+}
+
+.app-bg {
+  background: var(--app-bg);
+  color: var(--text-main);
+}
+
+.card-bg {
+  background: var(--card-bg);
+  color: var(--text-main);
+}
+
+.muted-text {
+  color: var(--text-muted);
+}
+:root {
+  --app-bg: #f8f7ff;
+  --card-bg: #ffffff;
+  --text-main: #15111f;
+  --text-muted: #6b7280;
+}
+
+.dark {
+  --app-bg: #0f0b18;
+  --card-bg: #171322;
+  --text-main: #ffffff;
+  --text-muted: #b8adc9;
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--text-main);
+}
+
+.app-bg {
+  background: var(--app-bg);
+  color: var(--text-main);
+}
+
+.card-bg {
+  background: var(--card-bg);
+  color: var(--text-main);
+}
+
+.muted-text {
+  color: var(--text-muted);
+}
+
+.dark .bg-white {
+  background-color: var(--card-bg);
+}
+
+.dark .bg-gray-50 {
+  background-color: #211a33;
+}
+
+.dark .text-black {
+  color: #ffffff;
+}
+
+.dark .text-gray-400,
+.dark .text-gray-500,
+.dark .text-gray-600 {
+  color: var(--text-muted);
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+  color: #ffffff;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #8f84a3;
+}

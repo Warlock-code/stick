@@ -21,8 +21,8 @@ export default function ThemeForm({ initialTheme }: { initialTheme: string }) {
 
     await supabase.from("profiles").update({ theme: value }).eq("id", user.id)
 
-    router.push("/settings")
-    router.refresh()
+    document.documentElement.classList.toggle("dark", value === "dark")
+router.refresh()
   }
 
   return (

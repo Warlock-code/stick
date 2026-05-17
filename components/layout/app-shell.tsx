@@ -18,7 +18,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const supabase = createClient()
-  const [theme, setTheme] = useState("light")
+
+  const [themeLoaded, setThemeLoaded] = useState(false)
 
   useEffect(() => {
     async function loadTheme() {
@@ -26,7 +27,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         data: { user },
       } = await supabase.auth.getUser()
 
-      if (!user) return
+      if (!user) {
+        setThemeLoaded(true)
+        return
+      }
 
       const { data } = await supabase
         .from("profiles")
@@ -36,8 +40,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       const userTheme = data?.theme ?? "light"
 
-      setTheme(userTheme)
       document.documentElement.classList.toggle("dark", userTheme === "dark")
+      setThemeLoaded(true)
     }
 
     loadTheme()
@@ -45,23 +49,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   async function handleLogout() {
     await supabase.auth.signOut()
+    document.documentElement.classList.remove("dark")
     router.push("/login")
     router.refresh()
   }
 
+  if (!themeLoaded) {
+    return <main className="app-bg min-h-screen" />
+  }
+
   return (
-    <main
-      className={`min-h-screen pb-24 transition ${
-        theme === "dark" ? "bg-[#0f0b18] text-white" : "bg-[#f8f7ff] text-black"
-      }`}
-    >
-      <header
-        className={`sticky top-0 z-50 border-b px-5 py-4 backdrop-blur-xl ${
-          theme === "dark"
-            ? "border-white/10 bg-[#171322]/80"
-            : "border-black/5 bg-white/80"
-        }`}
-      >
+    <main className="app-bg min-h-screen pb-24 transition">
+      <header className="sticky top-0 z-50 border-b border-black/5 bg-[var(--card-bg)]/80 px-5 py-4 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="rounded-2xl bg-black p-2 text-white">
